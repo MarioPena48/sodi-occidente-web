@@ -739,6 +739,34 @@ img {
   color: #f4f4f2;
 }
 
+.dest-mobile-card {
+  display: none;
+}
+
+.dest-anywhere-bar {
+  margin-top: 32px;
+  padding: 22px 26px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dest-anywhere-bar p {
+  font-size: 0.94rem;
+  color: var(--fg-subtle);
+  max-width: 56ch;
+}
+
+.dest-anywhere-bar strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
 /* SECTION 5: EXPERIENCES FULL-BLEED VERTICAL CARDS (korvant_5) */
 .exp-strip {
   display: grid;
@@ -1204,6 +1232,34 @@ img {
   .reserve-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+  .dest-photo-box {
+    display: none;
+  }
+  .dest-mobile-card {
+    display: block;
+    margin-top: 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-elevated);
+  }
+  .dest-mobile-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .dest-mobile-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 16px;
+    background: linear-gradient(180deg, transparent 0%, rgba(11, 11, 13, 0.88) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #f4f4f2;
   }
   .steps-grid {
     grid-template-columns: repeat(2, 1fr);

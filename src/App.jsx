@@ -373,6 +373,9 @@ export default function App() {
                     {d.name}
                   </option>
                 ))}
+                <option value="Otro destino (cualquier ciudad de México)">
+                  Otro destino (vamos a donde sea)
+                </option>
               </select>
             </div>
 
@@ -539,9 +542,14 @@ export default function App() {
             viewport={{ once: true, margin: "-80px" }}
           >
             <h2 className="h-display">
-              Te llevamos{" "}
-              <span className="h-muted">a los mejores destinos de Jalisco.</span>
+              Te llevamos a donde sea.{" "}
+              <span className="h-muted">Algunas recomendaciones en Jalisco.</span>
             </h2>
+            <p>
+              Estos destinos son solo recomendaciones de los viajes más
+              solicitados. <strong>Vamos a cualquier destino, playa, hacienda o estado de México</strong>{" "}
+              — tú eliges el lugar y nuestro chofer te lleva.
+            </p>
           </motion.div>
 
           <div className="dest-grid">
@@ -549,12 +557,19 @@ export default function App() {
               {DESTINATIONS.map((dest) => {
                 const isActive = dest.id === activeDestId;
                 return (
-                  <button
+                  <div
                     key={dest.id}
-                    type="button"
                     className={`dest-row ${isActive ? "active" : ""}`}
                     onClick={() => setActiveDestId(dest.id)}
                     onMouseEnter={() => setActiveDestId(dest.id)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveDestId(dest.id);
+                      }
+                    }}
                   >
                     <div className="dest-row-head">
                       <span className="dest-row-title">{dest.name}</span>
@@ -570,10 +585,36 @@ export default function App() {
                           style={{ overflow: "hidden" }}
                         >
                           <p className="dest-row-desc">{dest.desc}</p>
+                          {/* Inline photo card visible on mobile & tablet right inside the selected destination */}
+                          <div className="dest-mobile-card">
+                            <img src={dest.image} alt={dest.name} />
+                            <div className="dest-mobile-overlay">
+                              <span style={{ fontSize: "0.78rem", opacity: 0.9 }}>
+                                Chofer incluido
+                              </span>
+                              <button
+                                type="button"
+                                className="btn-ivory"
+                                style={{
+                                  background: "#f0efea",
+                                  color: "#0e0e10",
+                                  height: 36,
+                                  padding: "0 14px",
+                                  fontSize: "0.82rem",
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleChooseDest(dest.name);
+                                }}
+                              >
+                                Cotizar ruta <ArrowRight size={13} />
+                              </button>
+                            </div>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -609,6 +650,24 @@ export default function App() {
                 </button>
               </div>
             </div>
+          </div>
+
+          <div className="dest-anywhere-bar">
+            <p>
+              <strong>¿Tu destino no está en la lista?</strong> Estos lugares son
+              solo recomendaciones. Te llevamos a{" "}
+              <strong>cualquier ciudad, playa, evento o estado del país</strong>{" "}
+              con chofer profesional incluido.
+            </p>
+            <button
+              type="button"
+              className="btn-outline-dark"
+              onClick={() =>
+                handleChooseDest("Otro destino (cualquier ciudad de México)")
+              }
+            >
+              Cotizar otro destino <ArrowRight size={15} />
+            </button>
           </div>
         </div>
       </section>
@@ -962,6 +1021,9 @@ export default function App() {
                       {d.name}
                     </option>
                   ))}
+                  <option value="Otro destino (cualquier ciudad de México)">
+                    Otro destino (cualquier ciudad de México)
+                  </option>
                 </select>
               </div>
               <div className="field">
